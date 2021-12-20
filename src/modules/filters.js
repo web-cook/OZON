@@ -14,29 +14,26 @@ export const categoryFilter = (goods, value) => {
 
 
 //фильтр для цены
-export const priceFilter = (goods, valueMin, valueMax) => {
-    
-    if(valueMin && valueMax){
-        return goods.filter((goodsItem) => {
-            if(goodsItem.price < valueMax && goodsItem.price > valueMin) {
-                return goodsItem.price < valueMax && goodsItem.price > valueMin;
-            }
-        });
-    }
+export const priceFilter = (goods, min, max) => {
+    return goods.filter((goodsItem) => {
+        if(min == '' && max === '') {
+            return goodsItem
+        } else if(min !== '' && max !== '') {
+            return goodsItem.price > +min && goodsItem.price < +max
+        } else if(min !== '' && max === '') {
+            return goodsItem.price > +min
+        } else if(min === '' && max !== '') {
+            return goodsItem.price < +max
+        }
+    })
+}
 
-    if(valueMin){
-        return goods.filter((goodsItem) => {
-            if(goodsItem.price > valueMin ) {
-                return goodsItem.price > valueMin;
-            }
-        });
-    }
-
-    if(valueMax){
-        return goods.filter((goodsItem) => {
-            if(goodsItem.price < valueMax ) {
-                return goodsItem.price < valueMax;
-            }
-        });
-    }
+export const hotSaleFilter = (goods, value) => {
+    return goods.filter((goodsItem) => {
+        if (value) {
+            return goodsItem.sale === true
+        } else {
+            return goodsItem
+        }
+    });
 }
